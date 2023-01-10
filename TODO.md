@@ -1,0 +1,9 @@
+- support for base: linux in permissions, so that we cna allow known permissions like access to PATH, /etc
+- non-inherited permissions for context-aware permissions
+- use arrays instead of maps for lookups
+- auto generation
+- support for pre-submit
+- rename structures to be self explanatory, and add doc
+- sticky bit for permissions
+- support vendored deps
+- make path dynamic
