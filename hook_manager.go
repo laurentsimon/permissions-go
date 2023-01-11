@@ -1,6 +1,7 @@
 package permissions
 
 import (
+	"fmt"
 	"hooks"
 	"io/fs"
 	"os"
@@ -77,7 +78,7 @@ func (hm *hookManager) Getenv(key string) error {
 	elapsed := time.Since(start)
 	Times[Times_c] = elapsed.Nanoseconds()
 	Times_c++
-	mylog("perm check took ", string(elapsed.Nanoseconds()))
+	mylog("perm check took ", fmt.Sprint(elapsed.Nanoseconds()))
 
 	return nil
 }
@@ -95,7 +96,7 @@ func (hm *hookManager) Environ() error {
 	elapsed := time.Since(start)
 	Times[Times_c] = elapsed.Nanoseconds()
 	Times_c++
-	mylog("perm check took ", string(elapsed.Nanoseconds()))
+	mylog("perm check took ", fmt.Sprint(elapsed.Nanoseconds()))
 
 	return nil
 }
@@ -114,7 +115,7 @@ func (hm *hookManager) Open(file string, flag int, perms fs.FileMode) error {
 	elapsed := time.Since(start)
 	Times[Times_c] = elapsed.Nanoseconds()
 	Times_c++
-	mylog("perm check took ", string(elapsed.Nanoseconds()))
+	mylog("perm check took ", fmt.Sprint(elapsed.Nanoseconds()))
 
 	return nil
 }

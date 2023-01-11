@@ -17,7 +17,7 @@ type AccessMetadata struct {
 	ResName   string       `json:"resourceName"`
 	Access    Access       `json:"access"`
 	Trace     []Frame      `json:"frames"`
-	rpcs      []uintptr
+	rpcs      []uintptr    `json:"-"`
 }
 
 func (s *AccessMetadata) ToJSON() (string, error) {

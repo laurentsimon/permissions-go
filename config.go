@@ -19,8 +19,8 @@ const (
 )
 
 const (
-	policyDefaultDisallow policy = iota
-	policyDefaultAllow
+	PolicyDefaultDisallow policy = iota
+	PolicyDefaultAllow
 )
 
 type (
@@ -52,7 +52,7 @@ type (
 	dependencyName string
 	perms          map[dependencyName]permsByResType
 	permsByResType map[ResourceType]p
-	config         struct {
+	Config         struct {
 		Version     *int    `yaml:"version"`
 		Default     *policy `yaml:"default"`
 		Permissions *perms  `yaml:"permissions"`
@@ -83,7 +83,7 @@ var (
 	errInvalidPermissions = errors.New("invalid permissions")
 )
 
-func NewConfigFromData(data []byte) (*config, error) {
+func NewConfigFromData(data []byte) (*Config, error) {
 	c, err := parseFromJSON(data)
 	if err != nil {
 		return nil, err
@@ -96,8 +96,8 @@ func NewConfigFromData(data []byte) (*config, error) {
 	return c, nil
 }
 
-func parseFromJSON(content []byte) (*config, error) {
-	c := config{}
+func parseFromJSON(content []byte) (*Config, error) {
+	c := Config{}
 
 	err := yaml.Unmarshal(content, &c)
 	if err != nil {
@@ -106,7 +106,7 @@ func parseFromJSON(content []byte) (*config, error) {
 	return &c, nil
 }
 
-func (c *config) validate() error {
+func (c *Config) validate() error {
 	if err := c.validateVersion(); err != nil {
 		return err
 	}
@@ -118,7 +118,7 @@ func (c *config) validate() error {
 	return nil
 }
 
-func (c *config) validateDefault() error {
+func (c *Config) validateDefault() error {
 	if c.Default == nil {
 		return fmt.Errorf("%w: no default found", errInvalidDefault)
 	}
@@ -126,7 +126,7 @@ func (c *config) validateDefault() error {
 	return nil
 }
 
-func (c *config) validateVersion() error {
+func (c *Config) validateVersion() error {
 	if c.Version == nil {
 		return fmt.Errorf("%w: no version found", errInvalidVersion)
 	}
@@ -145,9 +145,9 @@ func (p *policy) UnmarshalYAML(n *yaml.Node) error {
 
 	switch n.Value {
 	case "allow":
-		*p = policyDefaultAllow
+		*p = PolicyDefaultAllow
 	case "disallow":
-		*p = policyDefaultDisallow
+		*p = PolicyDefaultDisallow
 	default:
 		return fmt.Errorf("%w: %q", errInvalidDefault, str)
 	}

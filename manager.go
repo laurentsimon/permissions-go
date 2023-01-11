@@ -11,13 +11,13 @@ import (
 )
 
 type PermissionsManager struct {
-	config      *config
+	config      *Config
 	hookManager *hookManager
 	cb          PermissionManagerCb
 }
 
 // TODO: remove?
-var depsPolicy = policyDefaultAllow
+var depsPolicy = PolicyDefaultAllow
 
 type (
 	permMatches func(val, req string) bool
@@ -116,7 +116,7 @@ func (pm *PermissionsManager) OnAccess(key string, matches permMatches, resType 
 	// TODO: verify that i's orrect for dangerous policy if error in fmatch()
 	dangerousPermissions := pm.getDangerousPermissionsForDep(key, matches, resType, depName)
 	// TODO: simplify
-	if *pm.config.Default == policyDefaultAllow && depsPolicy == policyDefaultAllow {
+	if *pm.config.Default == PolicyDefaultAllow && depsPolicy == PolicyDefaultAllow {
 		dangerousAllowed = isPermissionAllowed(dangerousPermissions, req, true)
 	} else {
 		// dangerousAllowed = isPermissionAllowed(DangerousPermissions, depName)
@@ -180,7 +180,7 @@ func (pm *PermissionsManager) OnAccess(key string, matches permMatches, resType 
 
 		if isLocal {
 			contextPermissions := pm.getContextPermissionsForDep(key, matches, resType, string(ambientAuthority))
-			if *pm.config.Default == policyDefaultDisallow {
+			if *pm.config.Default == PolicyDefaultDisallow {
 				if !foundLocal {
 					foundLocal = true
 					// Not allowed by default.
@@ -204,7 +204,7 @@ func (pm *PermissionsManager) OnAccess(key string, matches permMatches, resType 
 				directDep = packageName
 				mylog(" . Direct dep -", packageName)
 			}
-			if depsPolicy == policyDefaultDisallow {
+			if depsPolicy == PolicyDefaultDisallow {
 				if !found3P && !prevIs3P {
 					// Direct dependency.
 					found3P = true

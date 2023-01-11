@@ -19,14 +19,14 @@ func Test_NewConfigFromData(t *testing.T) {
 	t.Parallel()
 
 	one := 1
-	allow := policyDefaultAllow
-	disallow := policyDefaultDisallow
+	allow := PolicyDefaultAllow
+	disallow := PolicyDefaultDisallow
 	//nolint
 	tests := []struct {
 		err      error
 		name     string
 		filename string
-		config   *config
+		config   *Config
 	}{
 		{
 			name:     "no version",
@@ -51,7 +51,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "allow default",
 			filename: "./testdata/allow-default.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 			},
@@ -59,7 +59,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "disallow default",
 			filename: "./testdata/disallow-default.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &disallow,
 			},
@@ -77,7 +77,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "no perms",
 			filename: "./testdata/no-perms.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 			},
@@ -85,7 +85,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "none perms",
 			filename: "./testdata/none-perms.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 				Permissions: &perms{
@@ -96,7 +96,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "empty perms",
 			filename: "./testdata/empty-perms.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 			},
@@ -119,7 +119,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "perms none",
 			filename: "./testdata/perms-none.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 				Permissions: &perms{
@@ -131,7 +131,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "perms fs none",
 			filename: "./testdata/perms-fs-none.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 				Permissions: &perms{
@@ -171,7 +171,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "perms fs file",
 			filename: "./testdata/perms-fs-file.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 				Permissions: &perms{
@@ -192,7 +192,7 @@ func Test_NewConfigFromData(t *testing.T) {
 		{
 			name:     "perms env names",
 			filename: "./testdata/perms-env-names.yml",
-			config: &config{
+			config: &Config{
 				Version: &one,
 				Default: &allow,
 				Permissions: &perms{
